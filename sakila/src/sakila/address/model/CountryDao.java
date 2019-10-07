@@ -9,6 +9,23 @@ public class CountryDao {
 	public CountryDao() {
 		
 	}
+	// country를 추가하는 메소드
+	public void insertCountry(Country country) {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		String sql = "insert into country(country,last_update) values(?,now())";
+		try {
+			conn = DBHelper.getConnection();
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, country.getCountry());
+			stmt.executeUpdate();
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBHelper.close(rs, stmt, conn);
+		}
+	}
 	// 총 행을 구하는 메소드
 	public int selectCountryCount() {
 		int count = 0 ;
