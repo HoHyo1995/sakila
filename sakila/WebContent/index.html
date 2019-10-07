@@ -50,13 +50,112 @@
     <div id="section">
         <h1>INDEX</h1>
         <h2>sakila database table 정보</h2>
-        
+        <table>
+        	<thead>
+        		<tr>
+        			<th>테이블 이름</th>
+        			<th>행의 수</th>
+        		</tr>
+        	</thead>
+        	<tbody>
+        		<tr>
+        			<td>country</td>
+        			<td><span id="countryRow"></span></td>
+        		</tr>
+        		<tr>
+        			<td>city</td>
+        			<td><span id="cityRow"></span></td>
+        		</tr>
+        		<tr>
+        			<td>address</td>
+        			<td><span id="addressRow"></span></td>
+        		</tr>
+        		<tr>
+        			<td>customer</td>
+        			<td><span id="customerRow"></span></td>
+        		</tr>
+        		<tr>
+        			<td>store</td>
+        			<td><span id="storeRow"></span></td>
+        		</tr>
+        		<tr>
+        			<td>staff</td>
+        			<td><span id="staffRow"></span></td>
+        		</tr>
+        		<tr>
+        			<td>payment</td>
+        			<td><span id="paymentRow"></span></td>
+        		</tr>
+        		<tr>
+        			<td>rental</td>
+        			<td><span id="rentalRow"></span></td>
+        		</tr>
+        		<tr>
+        			<td>category</td>
+        			<td><span id="categoryRow"></span></td>
+        		</tr>
+        		<tr>
+        			<td>filmCategory</td>
+        			<td><span id="filmCategoryRow"></span></td>
+        		</tr>
+        		<tr>
+        			<td>film</td>
+        			<td><span id="filmRow"></span></td>
+        		</tr>
+        		<tr>
+        			<td>language</td>
+        			<td><span id="languageRow"></span></td>
+        		</tr>
+        		<tr>
+        			<td>actor</td>
+        			<td><span id="actorRow"></span></td>
+        		</tr>
+        		<tr>
+        			<td>filmActor</td>
+        			<td><span id="filmActorRow"></span></td>
+        		</tr>
+        		<tr>
+        			<td>inventory</td>
+        			<td><span id="inventoryRow"></span></td>
+        		</tr>
+        		<tr>
+        			<td>filmText</td>
+        			<td><span id="filmTextRow"></span></td>
+        		</tr>
+        		
+        	</tbody>
+        </table>
     </div>
 </body>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script>
 		// aside.html include
 		$("#aside").load("/sakila/aside.html");
+	</script>
+	<script>
+		$.ajax({
+			url:"/sakila/indexControllerServlet",
+			method:"post",
+			success: function(json){
+				console.log(json);
+				$("#countryRow").text(json.countryRow)
+				$("#cityRow").text(json.cityRow)
+				$("#addressRow").text(json.addressRow)
+				$("#customerRow").text(json.customerRow)
+				$("#storeRow").text(json.storeRow)
+				$("#staffRow").text(json.staffRow)
+				$("#paymentRow").text(json.paymentRow)
+				$("#rentalRow").text(json.rentalRow)
+				$("#categoryRow").text(json.categoryRow)
+				$("#filmCategoryRow").text(json.filmCategoryRow)
+				$("#filmRow").text(json.filmRow)
+				$("#languageRow").text(json.languageRow)
+				$("#actorRow").text(json.actorRow)
+				$("#filmActorRow").text(json.filmActorRow)
+				$("#inventoryRow").text(json.inventoryRow)
+				$("#filmTextRow").text(json.filmTextRow)
+			}
+		});
 	</script>
 </html>
 
