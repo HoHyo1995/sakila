@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>index</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+    body {
+        padding: 0;
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background-position: 0 0;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: cover;
+        position: relative;
+        overflow-y: auto;
+    }
+    
+    #aside {
+        width: 200px;
+        height: 3000px;
+        position: fixed;
+        background: orange;
+        overflow: hidden;
+        float: left;
+    }
+    
+    #section {
+        margin-left: 300px;
+        margin-right: 500px;
+        margin-bottom: 100px;
+        background: white;
+    }
+</style>
+</head>
+<body>
+    <div id="aside">
+        
+    </div>
+ <!-- 본문 -->
+    <div id="section">
+        <h1>City 관리</h1>
+        <h2>City 추가</h2>
+       	<div>
+        	<div class="dan">
+        		country 목록:
+        		<select size="10" id="countryList">
+        		</select>
+        	</div>
+        	<div class="dan">
+        		<table>
+        			<tr>
+        				<td>country id : </td>
+        				<td><input type="text" id= "countryId" readonly="readonly"></td>
+        			</tr>
+        			<tr>
+        				<td>city : </td>
+        				<td><input type="text" id= "city"></td>
+        			</tr>
+        			<tr>
+        				<td colspan="2">
+        					<button type="button" id="addCity">add</button>
+        				</td>
+        			</tr>
+        		</table>
+        	</div>	
+        </div>
+         <h2>city 목록</h2>
+        <div>
+        <table border = "1">
+				<thead>
+					<tr>
+						<th>city_id</th>
+						<th>city</th>
+						<th>country_id</th>
+						<th>country</th> <!-- city inner join country -->
+						<th>last_update</th>
+					</tr>
+				</thead>
+				<tbody id="list">
+				</tbody>
+			</table>
+        </div>
+        <button type = "button" id="preBtn">이전</button>
+		<button type = "button" id="nextBtn">다음</button>
+    </div>
+</body>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script>
+		// aside.html include
+		$("#aside").load("/sakila/aside.html");
+	</script>
+</html>
+
+
