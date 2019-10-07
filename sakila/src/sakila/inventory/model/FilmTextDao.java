@@ -12,7 +12,7 @@ public class FilmTextDao {
 		
 	}
 	// 총 행을 구하는 메소드
-	public int selectFilmCount() {
+	public int selectFilmTextCount() {
 		int count = 0 ;
 		Connection conn = null;
 		PreparedStatement stmt = null;
