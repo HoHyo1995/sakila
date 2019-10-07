@@ -12,7 +12,7 @@ public class LanguageDao {
 		
 	}
 	// 총 행을 구하는 메소드
-	public int selectlanguageCount() {
+	public int selectLanguageCount() {
 		int count = 0 ;
 		Connection conn = null;
 		PreparedStatement stmt = null;
