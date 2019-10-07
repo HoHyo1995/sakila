@@ -71,6 +71,26 @@
 		// aside.html include
 		$("#aside").load("/sakila/aside.html");
 	</script>
+	<script>
+	 // add버튼을 눌렀을 때
+	 $("#addCountry").click(function(){
+		 console.log("#addCountry click!");
+		 console.log("#country.value:", $("#country").val());
+		 // 빈칸이면 알림문구
+		 if($("#country").val()==="") {
+				alert("country를 일력하세요");
+				return;
+			}
+	 $.ajax({ // html요청 =>ajax요청,비동기방식
+		url : "/sakila/address/InsertCountry", 
+		method : "post", // 보낼 방법
+		data : {country : $("#country").val()},
+		success : function() {
+			console.log("success!");
+		}
+	 });
+	});
+	</script>
 </html>
 
 
