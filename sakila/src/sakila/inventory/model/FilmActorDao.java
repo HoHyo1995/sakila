@@ -17,7 +17,7 @@ public class FilmActorDao {
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		String sql = "select count(*) from filmActor";
+		String sql = "select count(*) from film_actor";
 		try {
 			conn = DBHelper.getConnection();
 			stmt = conn.prepareStatement(sql);

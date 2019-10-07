@@ -17,7 +17,7 @@ public class FilmTextDao {
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		String sql = "select count(*) from filmText";
+		String sql = "select count(*) from film_text";
 		try {
 			conn = DBHelper.getConnection();
 			stmt = conn.prepareStatement(sql);
