@@ -72,7 +72,76 @@
 		$("#aside").load("/sakila/aside.html");
 	</script>
 	<script>
-	 // add버튼을 눌렀을 때
+	// 이전버튼을 눌렀을 떄
+		$("#preBtn").click(function(){
+			if(currentPage === 1) {
+				alert("현재1페이지 입니다.");
+				return;
+			}
+			currentPage -= 1;
+			console.log(currentPage);
+			
+			$("#list").empty();
+			$.ajax({
+				url : "/sakila/address/selectCountryList",
+				method : "post",
+				data : {currentPage : currentPage},
+				success : function(json) { // json파일 -> 자바스크립트 객체변경
+				console.log(json);
+				for(let i = 0; i < json.length; i+=1) {
+					let html = "<tr><td>" +json[i].countryId+
+					"</td><td>"+json[i].country+
+					"</td><td>"+json[i].lastUpdate+
+					"</td></tr>"
+					$("#list").append(html);
+				}
+				}
+			});
+	});
+	// 다음버튼을 눌렀을 떄
+		$("#nextBtn").click(function(){
+			// db에서 전체 데이터 사이즈를 가지고 온다.
+			let count = 0;
+			$.ajax({
+				url: "/sakila/address/selectCountryCount",
+				method: "post",
+				async : false,
+				success: function(json) {
+					console.log(json);
+					count = Number(json);
+				}
+			});
+			// 마지막 페이지 구하기
+			// Math.ceil: 소수점 이하를 올림한다
+			let lastPage = Math.ceil(count / 10);
+			if(currentPage === lastPage) {
+				alert("마지막페이지 입니다.");
+				return;
+			}
+			
+			currentPage += 1 ;
+			console.log(currentPage);
+			
+			$("#list").empty();
+			$.ajax({
+				url : "/sakila/address/selectCountryList",
+				method : "post",
+				data : {currentPage : currentPage},
+				success : function(json) {
+				console.log(json);
+				for(let i = 0; i < json.length; i+=1) {
+					let html = "<tr><td>" +json[i].countryId+
+					"</td><td>"+json[i].country+
+					"</td><td>"+json[i].lastUpdate+
+					"</td></tr>"
+					$("#list").append(html);
+				}
+				}
+			});
+			
+	});
+	
+	// add버튼을 눌렀을 때
 	 $("#addCountry").click(function(){
 		 console.log("#addCountry click!");
 		 console.log("#country.value:", $("#country").val());
@@ -87,9 +156,49 @@
 		data : {country : $("#country").val()},
 		success : function() {
 			console.log("success!");
+			/*
+			add누를시 리스트 부분
+			*/
+			currentPage = 1;
+			$("#list").empty();
+			$.ajax({
+				url : "/sakila/address/selectCountryList",
+				method : "post",
+				data : {currentPage : currentPage},
+				success : function(json) { // json파일 -> 자바스크립트 객체변경
+				console.log(json);
+				for(let i = 0; i < json.length; i+=1) {
+					let html = "<tr><td>" +json[i].countryId+
+					"</td><td>"+json[i].country+
+					"</td><td>"+json[i].lastUpdate+
+					"</td></tr>"
+					$("#list").append(html);
+				}
+				}
+	 		});
 		}
-	 });
 	});
+});
+	 
+	 // 처음 출력했을떄(1페이지일떄)
+	 let currentPage = 1;
+	 // 중복이되서 지우고 뛰우기 위해서 
+	 $("#list").empty();
+	 $.ajax({
+			url : "/sakila/address/selectCountryList",
+			method : "post",
+			data : {currentPage : currentPage},
+			success : function(json) {
+			console.log(json);
+			for(let i = 0; i < json.length; i+=1) {
+				let html = "<tr><td>" +json[i].countryId+
+				"</td><td>"+json[i].country+
+				"</td><td>"+json[i].lastUpdate+
+				"</td></tr>"
+				$("#list").append(html);
+			}
+			}
+		});
 	</script>
 </html>
 
