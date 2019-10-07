@@ -11,6 +11,7 @@ public class CountryDao {
 	}
 	// country를 추가하는 메소드
 	public void insertCountry(Country country) {
+		System.out.println("country의 값은? "+country.getCountry());
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
