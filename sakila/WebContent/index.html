@@ -34,30 +34,30 @@
         margin-bottom: 100px;
         background: white;
     }
+    table, th, td {
+    	border : 1px solid #000000;
+    }
+    table {
+    	
+    }
 </style>
 </head>
 <body>
     <div id="aside">
-        <h1>MENU</h1>
-        <ul>
-        	<li>
-        		<div>Address 관리</div>
-        		<ol>
-        			<li><a href="/sakila/address/country.html">Country 관리</a></li>
-        			<li><a href="">City 관리</a></li>
-        			<li><a href="">Address 관리</a></li>
-        		</ol>
-        	</li>
-        	<li><a href="">Customer 관리</a></li>
-        	<li><a href="">Business 관리</a></li>
-        	<li><a href="">Inventory 관리</a></li>
-        </ul>
+        
     </div>
  <!-- 본문 -->
     <div id="section">
         <h1>INDEX</h1>
+        <h2>sakila database table 정보</h2>
+        
     </div>
 </body>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script>
+		// aside.html include
+		$("#aside").load("/sakila/aside.html");
+	</script>
 </html>
 
 
