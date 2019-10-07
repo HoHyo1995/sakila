@@ -12,7 +12,7 @@ public class CategoryDao {
 		
 	}
 	// 총 행을 구하는 메소드
-	public int selectCateogoryCount() {
+	public int selectCategoryCount() {
 		int count = 0 ;
 		Connection conn = null;
 		PreparedStatement stmt = null;
