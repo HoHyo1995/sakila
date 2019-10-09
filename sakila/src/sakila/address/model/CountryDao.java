@@ -10,6 +10,30 @@ public class CountryDao {
 	public CountryDao() {
 		
 	}
+	// city에서 사용할 전체 country 출력 메소드 페이징 안된거
+	public List<Country> selectCountryListAll(){
+		List<Country> list = new ArrayList<Country>();
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		String sql = "select country_id, country from country";
+		try {
+			conn = DBHelper.getConnection();
+			stmt = conn.prepareStatement(sql);
+			rs = stmt.executeQuery();
+			while(rs.next()) {
+				Country country = new Country();
+				country.setCountryId(rs.getInt("country_id"));
+				country.setCountry(rs.getString("country"));
+				list.add(country);
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBHelper.close(rs, stmt, conn);
+		}
+		return list;
+	}
 	// 전체리스트를 페이징하면서 출력하는 메소드
 	public List<Country> selectCountryList(int currentPage){
 		// 배열 생성
