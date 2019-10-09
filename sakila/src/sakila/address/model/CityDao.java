@@ -10,6 +10,25 @@ public class CityDao {
 	public CityDao() {
 	
 	}
+	// 데이터 추가 메소드
+	public void insertCity(City c) {
+		System.out.println("countryId는"+c.getCountry().getCountryId()+"city이름은"+c.getCity());
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		String sql = "INSERT INTO city(city, country_id, last_update) VALUES(?,?,NOW())";
+		try {
+			conn = DBHelper.getConnection();
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, c.getCity());
+			stmt.setInt(2, c.getCountry().getCountryId());
+			stmt.executeUpdate();
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBHelper.close(rs, stmt, conn);
+		}
+	}
 	// 전체를 페이징해서 출력하는 메소드
 	public List<City> selectCityList(int currentPage){
 		// 리턴 값을 받기위한 동적배열을 생성 및 선언한다
