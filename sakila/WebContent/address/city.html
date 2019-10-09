@@ -93,6 +93,25 @@
 		// aside.html include
 		$("#aside").load("/sakila/aside.html");
 	</script>
+	<script>
+	
+	// select태그에서 값을 누르면 insert에 값이 추가
+	$("#countryList").change(function(){
+		$("#countryId").val($("#countryList").val());
+	});
+	
+	// select의 옵션 값
+	$.ajax({
+		url:"/sakila/address/selectCountryListAll",
+		method:"post",
+		success:function(json){
+			console.log("select의 옵션값"+json);
+			for(let c of json) {
+				$("#countryList").append("<option value='"+c.countryId+"''>"+c.country+"</option>");
+			}
+		}
+	});
+	</script>
 </html>
 
 
