@@ -111,6 +111,22 @@
 			}
 		}
 	});
+	
+	// add 누를 시
+	$("#addCity").click(function(){
+		if($("#countryId").val()==="" || $("#city").val()==="") {
+			alert("값을 모두 넣어주세요");
+		} else{
+			$.ajax({
+				url:"/sakila/address/insertCityServlet",
+				method:"post",
+				data:{"countryId":$("#countryId").val(), "city":$("#city").val()},
+				success:function() {
+					console.log("Insert success!");
+				}
+			});
+		}
+	});
 	</script>
 </html>
 
