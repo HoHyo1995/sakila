@@ -127,6 +127,100 @@
 			});
 		}
 	});
+	// 커런트 페이지가 1일떄(평상시)
+	let currentPage = 1;
+	$("#list").empty();
+	$.ajax({
+		url : "/sakila/address/selectCityListServlet",
+		method : "post",
+		data : {currentPage : currentPage},
+		success : function(json) {
+			console.log(json);
+			for(let i = 0; i<json.length; i+=1) {
+				let html = "<tr><td>" + json[i].cityId+
+				"</td><td>"+json[i].city+
+				"</td><td>"+json[i].country.countryId+
+				"</td><td>"+json[i].country.country+
+				"</td><td>"+json[i].lastUpdate+
+				"</td></tr>"
+				$("#list").append(html);
+			}
+		}
+	
+	});
+	// 이전페이지를 누를 떄
+	$("#preBtn").click(function(){
+		if(currentPage === 1) {
+			alert("현재 1페이지 입니다.")
+			return;
+		}
+
+	currentPage -= 1;
+	console.log(currentPage);
+	
+	$("#list").empty();
+	$.ajax({
+		url:"/sakila/address/selectCityListServlet",
+		method:"post",
+		data:{currentPage : currentPage},
+		success: function(json) {
+			console.log(json);
+			for(let i = 0; i<json.length; i+=1) {
+				let html = "<tr><td>" + json[i].cityId+
+				"</td><td>"+json[i].city+
+				"</td><td>"+json[i].country.countryId+
+				"</td><td>"+json[i].country.country+
+				"</td><td>"+json[i].lastUpdate+
+				"</td></tr>"
+				$("#list").append(html);
+			}
+		}
+	});
+	});
+	
+	// 다음페이지를 누를 떄
+	$("#nextBtn").click(function(){
+	let count = 0;
+	$.ajax({
+		url:"/sakila/address/selectCityCountServlet",
+		method:"post",
+		async: false,
+		success: function(json) {
+			console.log(json);
+			count = Number(json);
+		}
+	});
+	// 이 사이즈로 지금 마지막페이지
+	let lastPage = Math.ceil(count / 10);
+	console.log(lastPage);
+	if(currentPage === lastPage) {
+		alert("마지막페이지 입니다.");
+		return;
+	}
+	
+	currentPage += 1 ;
+	console.log(currentPage);
+	
+	$("#list").empty();
+	$.ajax({
+		url : "/sakila/address/selectCityListServlet",
+		method : "post",
+		data : {currentPage : currentPage},
+		success : function(json) { // json파일 -> 자바스크립트 객체변경
+		console.log(json);
+		for(let i = 0; i < json.length; i+=1) {
+			let html = "<tr><td>" + json[i].cityId+
+			"</td><td>"+json[i].city+
+			"</td><td>"+json[i].country.countryId+
+			"</td><td>"+json[i].country.country+
+			"</td><td>"+json[i].lastUpdate+
+			"</td></tr>"
+			$("#list").append(html);
+		}
+		}
+	});
+	
+});
 	</script>
 </html>
 
