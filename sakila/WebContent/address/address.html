@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>index</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+    body {
+        padding: 0;
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background-position: 0 0;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: cover;
+        position: relative;
+        overflow-y: auto;
+    }
+    
+    #aside {
+        width: 200px;
+        height: 3000px;
+        position: fixed;
+        background: orange;
+        overflow: hidden;
+        float: left;
+    }
+    
+    #section {
+        margin-left: 300px;
+        margin-right: 500px;
+        margin-bottom: 100px;
+        background: white;
+    }
+    table{
+     border: 1px solid #333333;
+    }
+    td {
+        padding: 10px;
+        border: 1px solid #333333;
+      }
+</style>
+</head>
+<body>
+    <div id="aside">
+        
+    </div>
+ <!-- 본문 -->
+    <div id="section">
+        <h1>Address 관리</h1>
+        <h2>Address 입력</h2>
+        <div>
+        	
+        </div>
+        <h2>Address 목록</h2>
+        <div>
+        	<!-- to do: counry city address limit100 -->
+        	<table>
+	        	<thead>	
+	        		<tr>
+	        			<td>address_id</td>
+	        			<td>address</td>
+	        			<td>district</td>
+	        			<td>city_id</td>
+	        			<td>city</td>
+	        			<td>country</td>
+	        			<td>postal_code</td>
+	        			<td>phone</td>
+	        			<td>last_update</td>
+	        		</tr>
+	        	</thead>
+	        	<tbody id="list">
+	        	</tbody>	
+        	</table>
+        </div>
+    </div>
+</body>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script>
+		// aside.html include
+		$("#aside").load("/sakila/aside.html");
+	</script>
+	<script>
+	
+		// 전체 리스트 출력
+		$("#list").empty();
+		$.ajax({
+			url:"/sakila/address/selectAddressListServlet",
+			method:"post",
+			success: function(json){
+				console.log(json);
+				$(json).each(function(index, item){
+					let html = "<tr><td>"+item.addressId;
+						html += "</td><td>"+item.address;
+						html += "</td><td>"+item.district;
+						html += "</td><td>"+item.city.cityId;
+						html += "</td><td>"+item.city.city;
+						html += "</td><td>"+item.city.country.country;
+						html += "</td><td>"+item.postalCode
+						html += "</td><td>"+item.phone
+						html += "</td><td>"+item.lastUpdate
+						html += "</td></tr>";
+						$("#list").append(html);
+				});
+			}
+		});
+			
+	</script>
+</html>
+
+
