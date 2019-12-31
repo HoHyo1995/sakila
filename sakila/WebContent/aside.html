@@ -1,14 +1,25 @@
-<h1>MENU</h1>
-<ul>
-	<li>
-		<div>Address 관리</div>
-		<ol>
-			<li><a href="/sakila/address/country.html">Country 관리</a></li>
-			<li><a href="/sakila/address/city.html">City 관리</a></li>
-			<li><a href="sakila/address/address/html">Address 관리</a></li>
-		</ol>
-	</li>
-	<li><a href="">Customer 관리</a></li>
-	<li><a href="">Business 관리</a></li>
-	<li><a href="">Inventory 관리</a></li>
-</ul>
+
+<div class="sidenav">	
+	<div class="webName">Sakila</div>
+	<hr size = "5" color = "#B2CCFF">
+	<a href="/sakila/index.html" style="font-size: 25px">Home</a>
+	<ul class="list-unstyled components mb-5">
+      <li class="active">
+         <a href="#customerSubMenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Customer</a>
+         <ul class="collapse list-unstyled" id="customerSubMenu">
+            <li><a href="/sakila/address/country.html" style="font-size: 15px">-Country 관리</a></li>
+			<li><a href="/sakila/address/city.html" style="font-size: 15px">-City 관리</a></li>
+			<li><a href="sakila/address/address/html" style="font-size: 15px">-Address 관리</a></li>
+         </ul>
+      </li>
+      <li>
+         <a href="#businessSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Business</a>
+         <ul class="collapse list-unstyled" id="businessSubmenu">
+            <li><a href="/sakila/business/store.html" style="font-size: 15px">-매장 관리</a></li>
+            <li><a href="/sakila/business/" style="font-size: 15px">-직원 관리</a></li>
+            <li><a href="/sakila/business/" style="font-size: 15px">-대여 관리</a></li>
+            <li><a href="/sakila/business/" style="font-size: 15px">-지불 내역</a></li>
+         </ul>
+      </li>
+   </ul>
+</div>
