@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>index</title>
+<meta charset="UTF-8">
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+</head>
+<body>
+    <div id="aside">    
+    </div>
+ <!-- 본문 -->
+    <div id="section">
+        <h1>고객관리</h1>
+    	
+    	<!-- 검색조건 -->
+    	<div>
+    	</div>
+    	<!-- 테이블 출력 -->
+    	<div>
+    		<table border="1">
+    			<thead>
+    				<tr>
+    					<th>고객번호</th>
+    					<th>가게번호</th>
+    					<th>이름</th>
+    					<th>이메일</th>
+    					<th>상세주소</th>
+    					<th>최근결제일</th>
+    					<th>회원가입일</th>
+    				</tr>
+    			</thead>
+    			<tbody id="customerList">
+    			</tbody>
+    		</table>
+    	</div>
+    </div>
+</body>
+	<script>
+		// aside.html include
+		$("#aside").load("/sakila/aside.html");
+	</script>
+	<script>
+	// 기본 변수 선언
+	var currentPage = 1; 
+	// 기본 홈
+	$.ajax({
+		url : "/sakila/customer/selectCustomerList",
+		method : "post",
+		data : {"currentPage" : currentPage},
+		success : function(json){
+			console.log(json);
+			$(json).each(function(index,item){
+				var html = "<tr>"
+					html += "<td>"+item.customerId+"</td>"
+					html += "<td>"+item.storeId+"</td>"
+					html += "<td>"+item.firstName+"</td>"
+					html += "<td>"+item.email+"</td>"
+					html += "<td>"+item.address.address+"</td>"
+					html += "<td>"+item.lastUpdate+"</td>"
+					html += "<td>"+item.createDate+"</td>"
+					$("#customerList").append(html);	
+			});
+		} 
+	});	
+		
+	</script>
+</html>
+
+
