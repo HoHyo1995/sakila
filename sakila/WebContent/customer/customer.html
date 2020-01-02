@@ -26,6 +26,12 @@
     	
     	<!-- 검색조건 -->
     	<div>
+    		<div>
+    			<span>이름 </span><input type="text" id="name"> 
+    		</div>
+    		<div>
+    			<span>회원가입일 </span> <input type="date" id="fromDate"><span>~</span><input type="date" id="toDate"> <button type="button" onclick="">검색</button>
+    		</div>
     	</div>
     	<!-- 테이블 출력 -->
     	<div>
@@ -44,6 +50,10 @@
     			<tbody id="customerList">
     			</tbody>
     		</table>
+    		<div>
+    			<button type="button" onclick="prevBtn()" id="prevBtn">이전</button><span id="tableInfo"></span><button type="button" onclick="nextBtn()" id="nextBtn">다음</button>
+    			<a href="">고객 추가</a>
+    		</div>
     	</div>
     </div>
 </body>
@@ -53,27 +63,76 @@
 	</script>
 	<script>
 	// 기본 변수 선언
-	var currentPage = 1; 
+	var currentPage = 1;
+	var lastPage = undefined;
 	// 기본 홈
 	$.ajax({
 		url : "/sakila/customer/selectCustomerList",
 		method : "post",
+		async : false,
 		data : {"currentPage" : currentPage},
 		success : function(json){
-			console.log(json);
-			$(json).each(function(index,item){
-				var html = "<tr>"
-					html += "<td>"+item.customerId+"</td>"
-					html += "<td>"+item.storeId+"</td>"
-					html += "<td>"+item.firstName+"</td>"
-					html += "<td>"+item.email+"</td>"
-					html += "<td>"+item.address.address+"</td>"
-					html += "<td>"+item.lastUpdate+"</td>"
-					html += "<td>"+item.createDate+"</td>"
-					$("#customerList").append(html);	
-			});
+			//console.log(json);
+			pageInfo(json);
 		} 
-	});	
+	});
+	// 이전 버튼 눌렀을 때
+	function prevBtn() {
+		$.ajax({
+			url : "/sakila/customer/selectCustomerList",
+			method : "post",
+			async : false,
+			data : {"currentPage" : currentPage-1},
+			success : function(json){
+				//console.log(json);
+				pageInfo(json);
+			} 
+		});
+	}
+	// 다음 버튼 눌렀을 때
+	function nextBtn() {
+		$.ajax({
+			url : "/sakila/customer/selectCustomerList",
+			method : "post",
+			async : false,
+			data : {"currentPage" : currentPage+1},
+			success : function(json){
+				//console.log(json);
+				pageInfo(json);
+			} 
+		});
+	}
+	// 페이지 기본  함수
+	function pageInfo(json){
+		$("#customerList").empty();
+		currentPage = json.currentPage;
+		lastPage = json.lastPage;
+		$("#tableInfo").empty();
+		$("#tableInfo").append(currentPage+"/"+lastPage)
+		// 버튼 출력 유무 (이전,다음)
+		if(currentPage == 1){
+			$("#prevBtn").hide();
+		} else {
+			$("#prevBtn").show();
+		}
+		if(currentPage <lastPage) {
+			$("#nextBtn").show();
+		} else {
+			$("#nextBtn").hide();
+		}
+		$(json.list).each(function(index,item){
+			var html = "<tr>"
+				html += "<td>"+item.customerId+"</td>"
+				html += "<td>"+item.storeId+"</td>"
+				html += "<td>"+item.firstName+"</td>"
+				html += "<td>"+item.email+"</td>"
+				html += "<td>"+item.address.address+"</td>"
+				html += "<td>"+item.lastUpdate+"</td>"
+				html += "<td>"+item.createDate+"</td>"
+				$("#customerList").append(html);	
+		});
+	}
+	
 		
 	</script>
 </html>

@@ -13,9 +13,9 @@ public class CustomerDao {
 		
 	}
 	// 리스트 출력
-	public List<Customer> selectCustomerList(int currentPage) {
+	public List<Customer> selectCustomerList(int beginRow, int rowPerPage) {
 		System.out.println("------selectCustomerDao-----");
-		System.out.println("curretPage = "+currentPage);
+		System.out.println("beginRow = "+beginRow+" rowPerPage = "+rowPerPage);
 		// 리턴받을 리스트 배열 생성
 		List<Customer> list = new ArrayList<Customer>();
 		// DB에 사용할 변수 선언 및  초기화
@@ -24,10 +24,13 @@ public class CustomerDao {
 		ResultSet rs = null;
 		String sql = "SELECT c.customer_id, c.store_id, CONCAT(c.first_name,' ',c.last_name) AS NAME, c.email, a.address, left(c.last_update,10) AS last_update, left(c.create_date,10) AS create_date\r\n" + 
 				"FROM customer c INNER JOIN address a\r\n" + 
-				"ON c.address_id = a.address_id";
+				"ON c.address_id = a.address_id ORDER BY c.customer_id asc\r\n" + 
+				"LIMIT ?,?";
 		try {
 			conn = DBHelper.getConnection();
 			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, beginRow);
+			stmt.setInt(2, rowPerPage);
 			rs = stmt.executeQuery();
 			while(rs.next()) {
 				Customer customer = new Customer();
