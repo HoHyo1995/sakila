@@ -10,6 +10,39 @@ public class CityDao {
 	public CityDao() {
 	
 	}
+	// customer에서 셀렉트를 뛰우기 위한 메소드
+	public List<City> selectPickCityList(int countryNum){
+		// 리턴 값을 받기위한 동적배열을 생성 및 선언한다
+		List<City> list = new ArrayList<City>();
+		// 넘어 온 currentPage의 값을 확인한다
+		System.out.println("Dao의 countryNum = "+countryNum);
+		// 마리아DB에 사용 될 변수를 선언하고 초기화 한다
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		// 쿼리문을 사용한다
+		String sql = "SELECT ci.city_id, ci.city\r\n" + 
+				"FROM city ci INNER JOIN country co\r\n" + 
+				"ON ci.country_id = co.country_id\r\n" + 
+				"WHERE co.country_id =?";
+		try {
+			conn = DBHelper.getConnection();
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, countryNum);
+			rs = stmt.executeQuery();
+			while(rs.next()) {
+				City city = new City();
+				city.setCityId(rs.getInt("ci.city_id"));
+				city.setCity(rs.getString("ci.city"));
+				list.add(city);
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBHelper.close(rs, stmt, conn);
+		}
+		return list;
+	}
 	// 데이터 추가 메소드
 	public void insertCity(City c) {
 		System.out.println("countryId는"+c.getCountry().getCountryId()+"city이름은"+c.getCity());

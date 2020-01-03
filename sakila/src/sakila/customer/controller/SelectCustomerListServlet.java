@@ -18,7 +18,7 @@ import sakila.customer.service.CustomerService;
 
 
 @WebServlet("/customer/selectCustomerList")
-public class selectCustomerList extends HttpServlet {
+public class SelectCustomerListServlet extends HttpServlet {
 	private CustomerService customerService;
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("post-----/customer/selectCustomerList");

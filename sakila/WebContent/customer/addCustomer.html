@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>index</title>
+<meta charset="UTF-8">
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+</head>
+<body>
+    <div id="aside">    
+    </div>
+ <!-- 본문 -->
+    <div id="section">
+        <h2>회원추가</h2>
+	      <form action="/sakila/customer/addCustomer" method="post">
+	        <div>
+	        	<div>
+	        		<span>성 </span> <input type="text" id="firstName">
+	        		<span>이름 </span> <input type="text" id="lastName">
+	        	</div>
+	        	<div>
+	        		<span>스토어 </span> <input type="text" id="storeId">
+	        	</div>
+	        	<div>
+	        		<span>이메일 </span> <input type="text" id="email">
+	        	</div>
+	        	<div>
+	        		<span>번호 </span> <input type="text" id="phone">
+	        	</div>
+	        	<div>
+	        		<span>주소 </span>
+	        		<select size="10" id="countryList"></select>
+	        		<select size="10" id="cityList"></select>
+	        	</div>
+	        	<div>
+	        		<span>우편번호</span>
+	        		<input type="text" id="postalCode">
+	        	</div>
+	        	<div>
+	        		<span>상세주소</span>
+	        		<input type="text" id="address">
+	        	</div>
+	        	<a href="/sakila/customer/customer.html">취소</a> <button type="submit">회원등록</button>
+	        </div>
+	      </form>
+    </div>
+</body>
+	<script>
+		// aside.html include
+		$("#aside").load("/sakila/aside.html");
+	</script>
+	<script>
+		// select의 옵션 값
+		$.ajax({
+			url:"/sakila/address/selectCountryListAll",
+			method:"post",
+			success:function(json){
+				console.log(json);
+				$("#cityList").hide();
+				for(let c of json) {
+					$("#countryList").append("<option value='"+c.countryId+"''>"+c.country+"</option>");
+				}
+			}
+		});
+		// country선택시 city 리스트 출력
+		$("#countryList").change(function(){
+			$.ajax({
+				url:"/sakila/address/selectPickCityList",
+				method:"post",
+				async:"false",
+				data:{"countryNum" : $("#countryList").val()},
+				success:function(json){
+					console.log(json);
+					$("#cityList").empty();
+					$("#cityList").show();
+					for(let c of json) {
+						$("#cityList").append("<option value='"+c.cityId+"''>"+c.city+"</option>")
+						console.log(c.city);
+					}
+				}
+			});
+		});
+	</script>
+</html>
+
+

@@ -52,7 +52,7 @@
     		</table>
     		<div>
     			<button type="button" onclick="prevBtn()" id="prevBtn">이전</button><span id="tableInfo"></span><button type="button" onclick="nextBtn()" id="nextBtn">다음</button>
-    			<a href="">고객 추가</a>
+    			<a href="/sakila/customer/addCustomer.html">고객 추가</a>
     		</div>
     	</div>
     </div>
@@ -120,6 +120,7 @@
 		} else {
 			$("#nextBtn").hide();
 		}
+		// 테이블 내용 출력
 		$(json.list).each(function(index,item){
 			var html = "<tr>"
 				html += "<td>"+item.customerId+"</td>"
@@ -132,8 +133,6 @@
 				$("#customerList").append(html);	
 		});
 	}
-	
-		
 	</script>
 </html>
 

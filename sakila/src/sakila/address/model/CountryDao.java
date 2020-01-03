@@ -16,7 +16,7 @@ public class CountryDao {
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		String sql = "select country_id, country from country";
+		String sql = "select country_id, country from country order by country asc";
 		try {
 			conn = DBHelper.getConnection();
 			stmt = conn.prepareStatement(sql);
