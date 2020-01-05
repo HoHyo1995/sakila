@@ -44,12 +44,11 @@ public class AddCustomerServlet extends HttpServlet {
 		System.out.println("address = "+address);
 		customer.toString();
 		int checking = customerService.addCustomerService(customer, address, phone, cityId, district);
-		
-		
+		System.out.println(checking);
 		// gson객체 선언
 		Gson gson = new Gson();
 		// gson타입으로 변경 후 스트링타입에 복사
-		String jsonStr = gson.toJson(address);
+		String jsonStr = gson.toJson(checking);
 		// 응답하기
 		response.getWriter().write(jsonStr);
 	}

@@ -32,7 +32,11 @@
         		<span>이름 </span> <input type="text" id="lastName">
         	</div>
         	<div>
-        		<span>스토어 </span> <input type="text" id="storeId">
+        		<span>스토어 </span>
+        		<select id="storeId">
+        			<option value="1">1</option>
+        			<option value="2">2</option>
+        		</select>
         	</div>
         	<div>
         		<span>이메일 </span> <input type="text" id="email">
@@ -99,17 +103,26 @@
 		});
 		// 회원추가 버튼 클릭시
 		function addBtn(){
-			$.ajax({
-				url : "/sakila/customer/addCustomer",
-				method : "post",
-				async : "false",
-				data : {"firstName" : $("#firstName").val(), "lastName" : $("#lastName").val(),
-					"storeId" : $("#storeId").val(), "email" : $("#email").val(), "phone" : $("#phone").val(), "district" : $("#district").val(),
-					 "cityId" : $("#cityList").val(), "postalCode" : $("#postalCode").val(), "address" : $("#address").val()},
-				success:function(json){
-					console.log(json);
-				}
-			});
+			if($("#address").val() == ""){
+				alert("모든정보를 입력하세요!!");
+			}else{
+				$.ajax({
+					url : "/sakila/customer/addCustomer",
+					method : "post",
+					async : "false",
+					data : {"firstName" : $("#firstName").val(), "lastName" : $("#lastName").val(),
+						"storeId" : $("#storeId").val(), "email" : $("#email").val(), "phone" : $("#phone").val(), "district" : $("#district").val(),
+						 "cityId" : $("#cityList").val(), "postalCode" : $("#postalCode").val(), "address" : $("#address").val()},
+					success:function(json){
+						console.log(json);
+						if(json == 1){
+							location.href="/sakila/customer/customer.html";
+							alert("회원등록이 완료되었습니다.");
+						} 
+					}
+				});
+			}
+		
 		}
 	</script>
 </html>

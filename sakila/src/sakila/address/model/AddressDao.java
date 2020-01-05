@@ -20,7 +20,7 @@ public class AddressDao {
 		ResultSet rs = null;
 		String sql = "INSERT INTO address(address,phone,city_id,district, last_update)VALUES(?,?,?,?,NOW())";
 		try {
-			stmt = conn.prepareStatement(sql);
+			stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			stmt.setString(1, address);
 			stmt.setString(2, phone);
 			stmt.setInt(3, cityId);
