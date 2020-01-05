@@ -1,16 +1,51 @@
 package sakila.customer.service;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import sakila.address.model.AddressDao;
 import sakila.customer.model.Customer;
 import sakila.customer.model.CustomerDao;
 import sakila.db.DBHelper;
 
 public class CustomerService {
 	private CustomerDao customerDao;
+	private AddressDao addressDao;
+	// 고객등록 및 주소등록서비스(고객 insert전에 주소 insert부터 실행한다)
+	public int addCustomerService(Customer customer, String address, String phone, int cityId, String district) {
+		System.out.println("------addCustomerService-----");
+		int checking = 0;
+		// 객체생성
+		addressDao = new AddressDao();
+		customerDao = new CustomerDao();
+		// 트랜잭션
+		Connection conn = null;
+		try {
+			conn = DBHelper.getConnection();
+			conn.setAutoCommit(false);
+			// 어드레스등록
+			int addressId = addressDao.insertAddress(conn, address, phone, cityId, district);
+			// 커스터머 등록
+			checking = customerDao.insertCustomer(conn, customer, addressId);
+			conn.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			try {
+				conn.rollback();
+				return 0;
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+				return 0;
+			}
+		}finally {
+			DBHelper.close(null, null, conn);
+		}
+		return checking;
+	}
 	// 고객리스트 출력 서비스
 	public Map<String, Object> selectCustomerService(int currentPage){
 		System.out.println("------selectCustomerService-----");

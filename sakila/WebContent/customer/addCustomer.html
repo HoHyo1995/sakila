@@ -23,37 +23,42 @@
  <!-- 본문 -->
     <div id="section">
         <h2>회원추가</h2>
-	      <form action="/sakila/customer/addCustomer" method="post">
-	        <div>
-	        	<div>
-	        		<span>성 </span> <input type="text" id="firstName">
-	        		<span>이름 </span> <input type="text" id="lastName">
-	        	</div>
-	        	<div>
-	        		<span>스토어 </span> <input type="text" id="storeId">
-	        	</div>
-	        	<div>
-	        		<span>이메일 </span> <input type="text" id="email">
-	        	</div>
-	        	<div>
-	        		<span>번호 </span> <input type="text" id="phone">
-	        	</div>
-	        	<div>
-	        		<span>주소 </span>
-	        		<select size="10" id="countryList"></select>
-	        		<select size="10" id="cityList"></select>
-	        	</div>
-	        	<div>
-	        		<span>우편번호</span>
-	        		<input type="text" id="postalCode">
-	        	</div>
-	        	<div>
-	        		<span>상세주소</span>
-	        		<input type="text" id="address">
-	        	</div>
-	        	<a href="/sakila/customer/customer.html">취소</a> <button type="submit">회원등록</button>
-	        </div>
-	      </form>
+        
+        <div>
+        	<div>
+        		<span>성 </span> <input type="text" id="firstName">
+        	</div>
+        	<div>
+        		<span>이름 </span> <input type="text" id="lastName">
+        	</div>
+        	<div>
+        		<span>스토어 </span> <input type="text" id="storeId">
+        	</div>
+        	<div>
+        		<span>이메일 </span> <input type="text" id="email">
+        	</div>
+        	<div>
+        		<span>번호 </span> <input type="text" id="phone">
+        	</div>
+        	<div>
+        		<span>주소 </span>
+        		<select size="10" id="countryList"></select>
+        		<select size="10" id="cityList"></select>
+        	</div>
+        	<div>
+        		<span>지구</span>
+        		<input type="text" id="district">
+        	</div>
+        	<div>
+        		<span>우편번호</span>
+        		<input type="text" id="postalCode">
+        	</div>
+        	<div>
+        		<span>상세주소</span>
+        		<input type="text" id="address">
+        	</div>
+        	<a href="/sakila/customer/customer.html">취소</a> <button type="button" onclick="addBtn()">회원등록</button>
+        </div>
     </div>
 </body>
 	<script>
@@ -61,6 +66,7 @@
 		$("#aside").load("/sakila/aside.html");
 	</script>
 	<script>
+
 		// select의 옵션 값
 		$.ajax({
 			url:"/sakila/address/selectCountryListAll",
@@ -91,6 +97,20 @@
 				}
 			});
 		});
+		// 회원추가 버튼 클릭시
+		function addBtn(){
+			$.ajax({
+				url : "/sakila/customer/addCustomer",
+				method : "post",
+				async : "false",
+				data : {"firstName" : $("#firstName").val(), "lastName" : $("#lastName").val(),
+					"storeId" : $("#storeId").val(), "email" : $("#email").val(), "phone" : $("#phone").val(), "district" : $("#district").val(),
+					 "cityId" : $("#cityList").val(), "postalCode" : $("#postalCode").val(), "address" : $("#address").val()},
+				success:function(json){
+					console.log(json);
+				}
+			});
+		}
 	</script>
 </html>
 

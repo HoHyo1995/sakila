@@ -12,6 +12,29 @@ public class CustomerDao {
 	public CustomerDao() {
 		
 	}
+	// 고객 등록
+	public int insertCustomer(Connection conn, Customer customer, int addressId) {
+		// insert확인유무
+		int checking = 0;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		String sql = "INSERT INTO customer(first_name,last_name,store_id,email,address_id)\r\n" + 
+				"VALUES(?, ?, ?, ?,?)";
+		try {
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, customer.getFirstName());
+			stmt.setString(2, customer.getLastName());
+			stmt.setInt(3, customer.getStoreId());
+			stmt.setString(4, customer.getEmail());
+			stmt.setInt(5, addressId);
+			checking = stmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			DBHelper.close(rs, stmt, null);
+		}
+		return checking;
+	}
 	// 리스트 출력
 	public List<Customer> selectCustomerList(int beginRow, int rowPerPage) {
 		System.out.println("------selectCustomerDao-----");

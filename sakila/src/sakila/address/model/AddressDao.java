@@ -11,6 +11,36 @@ public class AddressDao {
 	public AddressDao() {
 		
 	}
+	// 고객등록할떄 먼저 어드레스 등록하는 메소드
+	public int insertAddress(Connection conn, String address, String phone, int cityId, String district) {
+		// insert확인유무(addressId값을 리턴받아서 customer 인설트 시 사용)
+		int row = 0;
+		int addressId = 0;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		String sql = "INSERT INTO address(address,phone,city_id,district, last_update)VALUES(?,?,?,?,NOW())";
+		try {
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, address);
+			stmt.setString(2, phone);
+			stmt.setInt(3, cityId);
+			stmt.setString(4, district);
+			row = stmt.executeUpdate();
+			System.out.println("영향을 받은 행:"+row);
+			rs = stmt.getGeneratedKeys();
+			if(rs.next()) {
+				addressId = rs.getInt(1);
+				System.out.println("생성된 고객의 주소 번호: "+addressId);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			DBHelper.close(rs, stmt, null);
+		}
+		
+		return addressId;
+	}
 	// 전체리스트 100개출력
 	public List<Address> selectAddressList() {
 		// 객체 생성
